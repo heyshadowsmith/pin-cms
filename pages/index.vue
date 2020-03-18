@@ -1,0 +1,68 @@
+<template>
+  <div>
+    <div class="menu">
+      <nuxt-link v-for="(menuItem, index) in menuItems" :key="index" :to="`/${menuItem.slug}`">
+        {{ menuItem.name }}
+      </nuxt-link>
+    </div>
+    <nuxt-child />
+  </div>
+</template>
+
+<script>
+import { mapMutations } from 'vuex'
+const axios = require('axios')
+
+export default {
+  async asyncData () {
+    // Only last 50 pins are returned, therefore, category limits must be set.
+    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${process.env.USER}/pins/`)
+    const pins = response.data.data.pins
+    const categories = []
+
+    pins.forEach((pin) => {
+      const category = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
+
+      if (!categories.includes(category, 0)) {
+        categories.push(category)
+      }
+    })
+
+    return {
+      categories
+    }
+  },
+  computed: {
+    menuItems () {
+      const menuItems = []
+
+      this.categories.forEach((category) => {
+        const words = category.split('-')
+        const newWords = []
+
+        words.forEach((word) => {
+          newWords.push(word.charAt(0).toUpperCase() + word.substring(1))
+        })
+
+        const name = newWords.join(' ')
+
+        menuItems.push({
+          name,
+          slug: category
+        })
+      })
+
+      return menuItems
+    }
+  },
+  created () {
+    this.storeCategories(this.categories)
+  },
+  methods: mapMutations({
+    storeCategories: 'global/storeCategories'
+  })
+}
+</script>
+
+<style>
+</style>
