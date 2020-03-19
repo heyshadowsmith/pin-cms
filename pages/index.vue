@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="menu">
+      <nuxt-link to="/">
+        Home
+      </nuxt-link>
       <nuxt-link v-for="(menuItem, index) in menuItems" :key="index" :to="`/${menuItem.slug}`">
         {{ menuItem.name }}
       </nuxt-link>

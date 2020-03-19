@@ -7,12 +7,13 @@
 </template>
 
 <script>
+import config from '~/config'
 const axios = require('axios')
 
 export default {
   async asyncData ({ params }) {
     const category = params.category
-    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${process.env.USER}/${category}/pins/`)
+    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
     const pins = response.data.data.pins
 
     pins.forEach((pin) => {
