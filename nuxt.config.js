@@ -1,3 +1,41 @@
+import axios from 'axios'
+import config from './config'
+
+const dynamicRoutes = async () => {
+  const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${config.user}/pins/`)
+  const pins = response.data.data.pins
+  const categories = []
+  const routes = []
+
+  pins.forEach((pin) => {
+    const category = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
+
+    if (!categories.includes(category, 0) && !category.startsWith('unedited-')) {
+      categories.push(category)
+      routes.push(`/${category}`)
+    }
+  })
+
+  categories.forEach(async (category) => {
+    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
+    const pins = response.data.data.pins
+    const subRoutes = []
+
+    pins.forEach((pin) => {
+      // Create title
+      pin.title = pin.description.split(' |')[0]
+      // Create slug
+      pin.slug = pin.title.toLowerCase().split(' ').join('-').split('\'').join('')
+
+      subRoutes.push(`/${category}/${pin.slug}`)
+    })
+
+    routes.concat(subRoutes)
+  })
+
+  return routes
+}
+
 export default {
   mode: 'universal',
   /*
@@ -13,6 +51,9 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
+  },
+  generate: {
+    routes: dynamicRoutes
   },
   /*
   ** Customize the progress-bar color
