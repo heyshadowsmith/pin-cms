@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ pin.title }}</h1>
+    <img :src="pin.images['564x'].url">
     <p>{{ pin.description }}</p>
   </div>
 </template>

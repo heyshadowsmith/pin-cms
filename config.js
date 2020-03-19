@@ -1,5 +1,4 @@
-const user = 'vscosmith'
-
-module.exports = {
-  user
+export default {
+  domain: 'https://shadowsmith.com',
+  user: 'heyshadowsmith'
 }

@@ -14,12 +14,13 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import config from '~/config'
 const axios = require('axios')
 
 export default {
   async asyncData () {
     // Only last 50 pins are returned, therefore, category limits must be set.
-    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${process.env.USER}/pins/`)
+    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${config.user}/pins/`)
     const pins = response.data.data.pins
     const categories = []
 
@@ -49,10 +50,12 @@ export default {
 
         const name = newWords.join(' ')
 
-        menuItems.push({
-          name,
-          slug: category
-        })
+        if (!name.startsWith('Unedited')) {
+          menuItems.push({
+            name,
+            slug: category
+          })
+        }
       })
 
       return menuItems
