@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 import config from '~/config'
 const axios = require('axios')
 
@@ -60,13 +59,7 @@ export default {
 
       return menuItems
     }
-  },
-  created () {
-    this.storeCategories(this.categories)
-  },
-  methods: mapMutations({
-    storeCategories: 'global/storeCategories'
-  })
+  }
 }
 </script>
 
