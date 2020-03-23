@@ -1,16 +1,54 @@
 <template>
-  <div>
-    <p><b>Link:</b> {{ link }}</p>
-    <p><b>Image:</b> {{ picture }}</p>
-    <p><b>Pin Link:</b> {{ createPinLink }}</p>
-
-    <input v-if="pin.category === 'unedited-products'" v-model="rawAffiliateLink" class="border" type="text" placeholder="Affiliate link">
-    <input v-model="rawTitle" class="border" type="text" placeholder="Title">
-    <input v-model="rawDescription" class="border" type="text" placeholder="Description">
-    <input v-model="rawHashtags" class="border" type="text" placeholder="Hashtags">
-    <a :href="createPinLink">
-      Save Pin
-    </a>
+  <div class="bg-gray-100 min-h-screen">
+    <nav class="bg-white flex justify-between items-center py-4 px-4 md:px-10 border-b">
+      <h1 class="text-xl font-medium">
+        <nuxt-link to="/admin">
+          PinterestCMS
+        </nuxt-link>
+      </h1>
+      <button class="bg-pinterest text-white font-medium py-2 px-4 rounded" @click="generate">
+        Generate Static Site
+      </button>
+    </nav>
+    <div class="py-8 px-4 sm:w-2/3 lg:w-2/3 mx-auto">
+      <h2 class="text-md sm:text-xl font-medium mb-6">
+        Add New Pin
+      </h2>
+      <div class="bg-white flex flex-col lg:flex-row rounded border w-full p-4 mx-auto">
+        <div class="w-full lg:w-1/2">
+          <img class="w-full rounded mb-4 md:mb-0" :src="pin.images['564x'].url">
+        </div>
+        <div class="lg:w-1/2 lg:pl-4">
+          <input
+            v-model="rawTitle"
+            class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Title"
+          >
+          <textarea
+            v-model="rawDescription"
+            class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Description"
+          />
+          <input
+            v-model="rawHashtags"
+            class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Hashtags"
+          >
+          <input
+            v-model="rawAffiliateLink"
+            class="mb-4 bg-white border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Affiliate link (optional)"
+          >
+          <a class="bg-pinterest inline-block text-white font-medium py-2 px-4 rounded" :href="createPinLink">
+            Save Pin
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,7 +104,7 @@ export default {
       return this.title.toLowerCase().split('%20').join('-').split('\'').join('')
     },
     link () {
-      if (this.pin.category === 'unedited-products') {
+      if (this.rawAffiliateLink) {
         return this.rawAffiliateLink.split(':').join('%3A').split('/').join('%2F')
       }
 
@@ -89,6 +127,11 @@ export default {
     },
     createPinLink () {
       return `https://www.pinterest.com/pin/create/button/?url=${this.link}&media=${this.picture}&description=${this.title}%20%7C%20${this.description}${this.hashtags}`
+    }
+  },
+  methods: {
+    generate () {
+      axios.post('https://api.netlify.com/build_hooks/5e78a97090508d14f8a20331')
     }
   }
 }
