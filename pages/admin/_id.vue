@@ -1,6 +1,9 @@
 <template>
   <div>
-    {{ pin }} - {{ link }}
+    <p><b>Link:</b> {{ link }}</p>
+    <p><b>Image:</b> {{ picture }}</p>
+    <p><b>Pin Link:</b> {{ createPinLink }}</p>
+
     <input v-if="pin.category === 'unedited-products'" v-model="rawAffiliateLink" class="border" type="text" placeholder="Affiliate link">
     <input v-model="rawTitle" class="border" type="text" placeholder="Title">
     <input v-model="rawDescription" class="border" type="text" placeholder="Description">
@@ -12,7 +15,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 import config from '~/config'
 const axios = require('axios')
 
@@ -61,7 +63,7 @@ export default {
       return this.pin.category.split('unedited-')[1]
     },
     slug () {
-      return this.title.toLowerCase().split(' ').join('-').split('\'').join('')
+      return this.title.toLowerCase().split('%20').join('-').split('\'').join('')
     },
     link () {
       if (this.pin.category === 'unedited-products') {
@@ -74,7 +76,7 @@ export default {
       return this.pin.images['564x'].url.split(':').join('%3A').split('/').join('%2F')
     },
     title () {
-      return `${this.rawTitle.split(' ').join('%20')}%20%7C%20`
+      return `${this.rawTitle.split(' ').join('%20')}`
     },
     description () {
       return `${this.rawDescription.split(' ').join('%20').split('!').join('%21')}%20`
@@ -86,14 +88,8 @@ export default {
       return this.title.length + this.description.length + this.hashtags.length
     },
     createPinLink () {
-      return `https://www.pinterest.com/pin/create/button/?url=${this.website}&media=${this.picture}&description=${this.title}${this.description}${this.hashtags}`
+      return `https://www.pinterest.com/pin/create/button/?url=${this.link}&media=${this.picture}&description=${this.title}%20%7C%20${this.description}${this.hashtags}`
     }
-  },
-  created () {
-    this.storeCategories(this.categories)
-  },
-  methods: mapMutations({
-    storeCategories: 'global/storeCategories'
-  })
+  }
 }
 </script>
