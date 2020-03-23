@@ -16,22 +16,21 @@ const dynamicRoutes = async () => {
     }
   })
 
-  categories.forEach(async (category) => {
-    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
-    const pins = response.data.data.pins
-    const subRoutes = []
+  async function getSubRoutes () {
+    for (const category of categories) {
+      const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
+      const pins = response.data.data.pins
 
-    pins.forEach((pin) => {
-      // Create title
-      pin.title = pin.description.split(' |')[0]
-      // Create slug
-      pin.slug = pin.title.toLowerCase().split(' ').join('-').split('\'').join('')
+      pins.forEach((pin) => {
+        pin.title = pin.description.split(' |')[0]
+        pin.slug = pin.title.toLowerCase().split(' ').join('-').split('\'').join('')
 
-      subRoutes.push(`/${category}/${pin.slug}`)
-    })
+        routes.push(`/${category}/${pin.slug}`)
+      })
+    }
+  }
 
-    routes.concat(subRoutes)
-  })
+  await getSubRoutes()
 
   return routes
 }
