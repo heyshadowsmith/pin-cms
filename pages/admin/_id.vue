@@ -3,7 +3,7 @@
     <PNav />
     <div class="py-8 px-4 sm:w-2/3 lg:w-2/3 mx-auto">
       <h2 class="text-md sm:text-xl font-medium mb-6">
-        Add New Pin
+        Repin back to Pinterest
       </h2>
       <div class="bg-white flex flex-col lg:flex-row rounded border w-full p-4 mx-auto">
         <div class="w-full lg:w-1/2">
@@ -34,9 +34,14 @@
             type="text"
             placeholder="Affiliate link (optional)"
           >
-          <a class="bg-pinterest inline-block text-white font-medium py-2 px-4 rounded" :href="createPinLink">
-            Save Pin
-          </a>
+          <div class="flex items-center">
+            <a class="bg-pinterest inline-block text-white font-medium py-2 px-4 rounded mr-4" :href="createPinLink">
+              Repin
+            </a>
+            <p class="text-gray-500 text-sm">
+              {{ totalPinDescriptionCharacters }} of 494
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -118,7 +123,7 @@ export default {
       return this.rawHashtags.split(' ').join('%20').split('#').join('%23')
     },
     totalPinDescriptionCharacters () {
-      return this.title.length + this.description.length + this.hashtags.length
+      return this.title.length + this.description.length + this.hashtags.length - 3
     },
     createPinLink () {
       return `https://www.pinterest.com/pin/create/button/?url=${this.link}&media=${this.picture}&description=${this.title}%20%7C%20${this.description}${this.hashtags}`
