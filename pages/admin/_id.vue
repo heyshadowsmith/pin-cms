@@ -7,7 +7,7 @@
         </nuxt-link>
       </h1>
       <button class="bg-pinterest text-white font-medium py-2 px-4 rounded" @click="generate">
-        Generate Static Site
+        Publish Updates
       </button>
     </nav>
     <div class="py-8 px-4 sm:w-2/3 lg:w-2/3 mx-auto">
