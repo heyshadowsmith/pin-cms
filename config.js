@@ -1,4 +1,4 @@
 export default {
-  domain: 'https://shadowsmith.com',
+  domain: 'https://pin-cms.netlify.com',
   user: 'heyshadowsmith'
 }
