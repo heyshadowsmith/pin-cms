@@ -1,5 +1,8 @@
 <template>
   <div>
+    <button @click="generate">
+      Generate Static Site
+    </button>
     <div v-for="(pin, index) in pins" :key="index">
       <nuxt-link :to="`/admin/${pin.id}`">
         <img :src="pin.images['564x'].url">
@@ -38,6 +41,11 @@ export default {
 
     return {
       pins: uneditedPins
+    }
+  },
+  methods: {
+    generate () {
+      axios.post('https://api.netlify.com/build_hooks/5e78a97090508d14f8a20331')
     }
   }
 }
