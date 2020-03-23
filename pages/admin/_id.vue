@@ -1,15 +1,6 @@
 <template>
-  <div class="bg-gray-100 min-h-screen">
-    <nav class="bg-white flex justify-between items-center py-4 px-4 md:px-10 border-b">
-      <h1 class="text-xl font-medium">
-        <nuxt-link to="/admin">
-          PinterestCMS
-        </nuxt-link>
-      </h1>
-      <button class="bg-pinterest text-white font-medium py-2 px-4 rounded" @click="generate">
-        Publish Updates
-      </button>
-    </nav>
+  <div>
+    <PNav />
     <div class="py-8 px-4 sm:w-2/3 lg:w-2/3 mx-auto">
       <h2 class="text-md sm:text-xl font-medium mb-6">
         Add New Pin
@@ -53,10 +44,14 @@
 </template>
 
 <script>
+import PNav from '~/components/PNav'
 import config from '~/config'
 const axios = require('axios')
 
 export default {
+  components: {
+    PNav
+  },
   async asyncData ({ params }) {
     const id = params.id
     // Only last 50 pins are returned, therefore, category limits must be set.
@@ -127,11 +122,6 @@ export default {
     },
     createPinLink () {
       return `https://www.pinterest.com/pin/create/button/?url=${this.link}&media=${this.picture}&description=${this.title}%20%7C%20${this.description}${this.hashtags}`
-    }
-  },
-  methods: {
-    generate () {
-      axios.post('https://api.netlify.com/build_hooks/5e78a97090508d14f8a20331')
     }
   }
 }
