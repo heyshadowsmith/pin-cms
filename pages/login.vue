@@ -20,9 +20,6 @@
 <script>
 export default {
   name: 'Login',
-  mounted () {
-    this.login()
-  },
   methods: {
     login () {
       const user = window.netlifyIdentity.currentUser()
