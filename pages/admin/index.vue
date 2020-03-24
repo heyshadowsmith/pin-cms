@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import PNav from '~/components/PNav'
+import PNav from '~/components/admin/PNav'
 import config from '~/config'
 const axios = require('axios')
 

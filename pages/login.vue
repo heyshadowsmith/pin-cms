@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 min-h-screen pb-6 flex flex-col justify-center items-center">
+  <div class="bg-gray-100 min-h-screen px-4 flex flex-col justify-center items-center">
     <div class="border rounded bg-white p-4 mb-6">
       <h1 class="text-xl font-medium mb-2">
         PinterestCMS
