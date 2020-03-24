@@ -13,7 +13,7 @@
       </div>
       <div v-if="pins.length === 0" class="border rounded bg-white p-4 text-gray-600">
         <p class="mb-4">
-          Pin something to a board called "Unedited-[Category Name]" and then come back here to repin that pin. If you get confused, please read our guide on <a class="text-pinterest font-medium" href="#">how to add content to your website</a>.
+          Pin something to a board called "Unedited [Category Name]" and then come back here to repin that pin. If you get confused, please read our guide on <a class="text-pinterest font-medium" href="#">how to add content to your website</a>.
         </p>
         <a class="bg-pinterest text-white font-medium py-2 px-4 rounded inline-block" href="https://pinterest.com" target="_blank">
           Go to Pinterest
