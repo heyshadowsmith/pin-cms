@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style>
-.callOut {
+.netlify-identity-menu {
   display: none;
 }
 </style>
