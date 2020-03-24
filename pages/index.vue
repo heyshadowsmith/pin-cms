@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div data-netlify-identity-menu />
     <div class="menu">
       <nuxt-link to="/">
         Home
@@ -58,6 +59,11 @@ export default {
       })
 
       return menuItems
+    }
+  },
+  head () {
+    return {
+      script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }]
     }
   }
 }
