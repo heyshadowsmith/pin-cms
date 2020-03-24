@@ -42,7 +42,7 @@ export default {
   methods: {
     logout () {
       window.netlifyIdentity.logout()
-      this.$router.push('/')
+      this.$router.push('/login')
     },
     generate () {
       this.loading = true
