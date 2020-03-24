@@ -41,10 +41,16 @@ export default {
     return {
       pin
     }
+  },
+  head () {
+    return {
+      title: `${this.pin.title} | ${config.title}` || '',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: this.pin.description || '' }
+      ]
+    }
   }
 }
 </script>
-
-<style>
-
-</style>

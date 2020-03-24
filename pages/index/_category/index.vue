@@ -15,6 +15,7 @@ export default {
     const category = params.category
     const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
     const pins = response.data.data.pins
+    const board = response.data.data.board
 
     pins.forEach((pin) => {
       // Create pin ID
@@ -35,13 +36,20 @@ export default {
     })
 
     return {
+      board,
       category,
       pins
+    }
+  },
+  head () {
+    return {
+      title: `${this.board.name} | ${config.title}` || '',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: this.board.description || '' }
+      ]
     }
   }
 }
 </script>
-
-<style>
-
-</style>
