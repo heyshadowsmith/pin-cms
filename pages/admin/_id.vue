@@ -1,54 +1,51 @@
 <template>
-  <div>
-    <PNav />
-    <div class="py-8 px-4 sm:w-2/3 lg:w-2/3 mx-auto">
-      <h2 class="text-md sm:text-xl font-medium mb-6">
-        Repin back to Pinterest
-      </h2>
-      <div class="bg-white flex flex-col lg:flex-row rounded border w-full p-4 mx-auto">
-        <div class="w-full lg:w-1/2">
-          <img class="w-full rounded mb-4 md:mb-0" :src="pin.images['564x'].url">
-        </div>
-        <div class="lg:w-1/2 lg:pl-4 flex flex-col justify-between">
-          <form class="mb-6">
-            <input
-              v-model="rawTitle"
-              class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
-              type="text"
-              placeholder="Title"
-            >
-            <textarea
-              v-model="rawDescription"
-              class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
-              type="text"
-              placeholder="Description"
-            />
-            <input
-              v-model="rawHashtags"
-              class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
-              type="text"
-              placeholder="Hashtags"
-            >
-            <input
-              v-model="rawAffiliateLink"
-              class="mb-4 bg-white border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-              type="text"
-              placeholder="Affiliate link (optional)"
-            >
-            <div class="flex items-center">
-              <a target="_blank" class="bg-pinterest inline-block text-white font-medium py-2 px-4 rounded mr-4" :href="createPinLink">
-                Repin
-              </a>
-              <p class="text-gray-500 text-sm">
-                {{ totalPinDescriptionCharacters }} of 494
-              </p>
-            </div>
-          </form>
-          <div class="border rounded bg-gray-100 p-2 text-gray-600">
-            <p class="text-sm">
-              Remember to <a class="text-pinterest font-medium" :href="`https://pinterest.com${pin.board.url}`" target="_blank">delete this pin from your {{ pin.board.name }} board</a> on Pinterest when you're finished repinning it to your {{ pin.targetBoard }} board.
+  <div class="py-8 px-4 sm:w-2/3 lg:w-2/3 mx-auto">
+    <h2 class="text-md sm:text-xl font-medium mb-6">
+      Repin back to Pinterest
+    </h2>
+    <div class="bg-white flex flex-col lg:flex-row rounded border w-full p-4 mx-auto">
+      <div class="w-full lg:w-1/2">
+        <img class="w-full rounded mb-4 md:mb-0" :src="pin.images['564x'].url">
+      </div>
+      <div class="lg:w-1/2 lg:pl-4">
+        <form class="mb-6">
+          <input
+            v-model="rawTitle"
+            class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Title"
+          >
+          <textarea
+            v-model="rawDescription"
+            class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Description"
+          />
+          <input
+            v-model="rawHashtags"
+            class="mb-4 bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Hashtags"
+          >
+          <input
+            v-model="rawAffiliateLink"
+            class="mb-4 bg-white border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="Affiliate link (optional)"
+          >
+          <div class="flex items-center">
+            <a target="_blank" class="bg-pinterest inline-block text-white font-medium py-2 px-4 rounded mr-4" :href="createPinLink">
+              Repin
+            </a>
+            <p class="text-gray-500 text-sm">
+              {{ totalPinDescriptionCharacters }} of 494
             </p>
           </div>
+        </form>
+        <div class="border rounded bg-gray-100 p-2 text-gray-600">
+          <p class="text-sm">
+            Remember to <a class="text-pinterest font-medium" :href="`https://pinterest.com${pin.board.url}`" target="_blank">delete this pin from your {{ pin.board.name }} board</a> on Pinterest when you're finished repinning it to your {{ pin.targetBoard }} board.
+          </p>
         </div>
       </div>
     </div>
@@ -56,14 +53,10 @@
 </template>
 
 <script>
-import PNav from '~/components/admin/PNav'
 import config from '~/config'
 const axios = require('axios')
 
 export default {
-  components: {
-    PNav
-  },
   async asyncData ({ params }) {
     const id = params.id
     // Only last 50 pins are returned, therefore, category limits must be set.

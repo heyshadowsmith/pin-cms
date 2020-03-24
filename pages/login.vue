@@ -7,9 +7,14 @@
       <p class="mb-4 text-gray-600">
         In order to access the admin area of this website, you must log in.
       </p>
-      <button class="bg-pinterest text-white font-medium py-2 px-4 rounded inline-block" @click="login">
-        Go to admin area
-      </button>
+      <div class="flex">
+        <button class="bg-pinterest text-white font-medium py-2 px-4 rounded inline-block mr-4" @click="login">
+          Go to admin area
+        </button>
+        <nuxt-link to="/" class="border bg-white font-medium py-2 px-4 rounded inline-block">
+          Go to website
+        </nuxt-link>
+      </div>
     </div>
     <p class="text-center text-xs text-gray-500">
       {{ new Date().getFullYear() }} PinterestCMS, All Rights Reserved.
