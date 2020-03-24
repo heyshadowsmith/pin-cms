@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div data-netlify-identity-menu />
     <div class="menu">
       <nuxt-link to="/">
         Home
@@ -63,6 +62,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

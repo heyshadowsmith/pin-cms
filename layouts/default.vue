@@ -11,9 +11,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.netlify-identity-menu {
-  display: none;
-}
-</style>
