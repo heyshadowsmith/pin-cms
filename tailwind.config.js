@@ -9,6 +9,9 @@ module.exports = {
     extend: {
       colors: {
         pinterest: '#e60023'
+      },
+      spacing: {
+        'half-screen': '50vh'
       }
     }
   },
