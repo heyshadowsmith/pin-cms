@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 flex justify-between items-center">
+  <div class="px-6 py-3 flex flex-col justify-between items-center md:flex-row md:py-0">
     <nuxt-link to="/" class="py-4 px-3">
       <Logo />
     </nuxt-link>
