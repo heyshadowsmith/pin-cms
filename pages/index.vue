@@ -1,61 +1,65 @@
 <template>
   <div>
-    <!-- <nuxt-link to="/">
-      Home
-    </nuxt-link> -->
-    <nuxt-link v-for="(menuItem, index) in menuItems" :key="index" :to="`/${menuItem.slug}`">
-      {{ menuItem.name }}
-    </nuxt-link>
+    <PAdminMenu v-if="loggedIn" />
+    <PMenu :links="categories" />
     <nuxt-child />
   </div>
 </template>
 
 <script>
+import { uniqBy } from 'lodash'
+import PAdminMenu from '~/components/admin/PAdminMenu'
+import PMenu from '~/components/theme/default/PMenu'
 import config from '~/config'
 const axios = require('axios')
 
 export default {
+  components: {
+    PAdminMenu,
+    PMenu
+  },
   async asyncData () {
     // Only last 50 pins are returned, therefore, category limits must be set.
     const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${config.user}/pins/`)
     const pins = response.data.data.pins
-    const categories = []
+    let categories = []
 
     pins.forEach((pin) => {
-      const category = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
+      const name = pin.board.name
+      const slug = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
 
-      if (!categories.includes(category, 0)) {
-        categories.push(category)
+      if (!name.startsWith('Unedited')) {
+        categories.push({
+          name,
+          slug,
+          img: pin.images['564x'].url
+        })
       }
     })
+
+    categories = uniqBy(categories, category => category.name)
 
     return {
       categories
     }
   },
-  computed: {
-    menuItems () {
-      const menuItems = []
+  data () {
+    return {
+      loggedIn: false
+    }
+  },
+  mounted () {
+    this.getUser()
+  },
+  methods: {
+    getUser () {
+      const user = window.netlifyIdentity.currentUser()
 
-      this.categories.forEach((category) => {
-        const words = category.split('-')
-        const newWords = []
-
-        words.forEach((word) => {
-          newWords.push(word.charAt(0).toUpperCase() + word.substring(1))
-        })
-
-        const name = newWords.join(' ')
-
-        if (!name.startsWith('Unedited')) {
-          menuItems.push({
-            name,
-            slug: category
-          })
-        }
-      })
-
-      return menuItems
+      if (user) {
+        this.loggedIn = true
+      } else {
+        this.loggedIn = false
+      }
     }
   }
 }
