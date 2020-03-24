@@ -9,25 +9,49 @@
       <button class="mr-6" @click="logout">
         Log out
       </button>
-      <button class="bg-pinterest text-white font-medium py-2 px-4 rounded" @click="generate">
-        Publish Updates
+      <button class="border font-medium py-2 px-4 rounded" :class="styles" @click="generate">
+        <span v-if="!loading">Publish updates</span>
+        <span v-else>Build triggered</span>
       </button>
     </div>
   </nav>
 </template>
 
 <script>
-import axios from '@nuxtjs/axios'
+const axios = require('axios')
 
 export default {
   name: 'PNav',
+  data () {
+    return {
+      loading: false
+    }
+  },
+  computed: {
+    styles () {
+      return {
+        'bg-pinterest': !this.loading,
+        'text-white': !this.loading,
+        'border-transparent': !this.loading,
+        'bg-gray-100': this.loading,
+        'border-gray-300': this.loading,
+        'text-black': this.loading
+      }
+    }
+  },
   methods: {
     logout () {
       window.netlifyIdentity.logout()
       this.$router.push('/')
     },
     generate () {
+      this.loading = true
+
       axios.post('https://api.netlify.com/build_hooks/5e78a97090508d14f8a20331')
+
+      setTimeout(() => {
+        this.loading = false
+      }, 2000)
     }
   }
 }
