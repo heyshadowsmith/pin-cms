@@ -12,7 +12,7 @@ import PAdminMenu from '~/core/admin/PAdminMenu'
 import Theme from '~/user/theme'
 
 import config from '~/config'
-import { getCategories } from '~/core/utilities/getCategories'
+import { getBoards } from '~/core/utilities/getBoards'
 
 export default {
   components: {
@@ -20,11 +20,11 @@ export default {
     PAdminMenu
   },
   async asyncData () {
-    const categories = await getCategories(config.user)
+    const boards = await getBoards(config.user)
 
     return {
       themeData: {
-        categories
+        boards
       }
     }
   },

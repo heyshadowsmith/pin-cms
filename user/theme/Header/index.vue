@@ -1,5 +1,5 @@
 <template>
-  <Menu :links="themeData.categories" />
+  <Menu :links="themeData.boards" />
 </template>
 
 <script>

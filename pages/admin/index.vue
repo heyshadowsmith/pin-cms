@@ -11,7 +11,7 @@
     </div>
     <div v-if="pins.length === 0" class="border rounded bg-white p-4 text-gray-600">
       <p class="mb-4">
-        Pin something to a board called "Unedited [Category Name]" and then come back here to repin that pin. If you get confused, please read our guide on <a class="text-pinterest font-medium" href="#">how to add content to your website</a>.
+        Pin something to a board called "Unedited [Board Name]" and then come back here to repin that pin. If you get confused, please read our guide on <a class="text-pinterest font-medium" href="#">how to add content to your website</a>.
       </p>
       <a class="bg-pinterest text-white font-medium py-2 px-4 rounded inline-block" href="https://pinterest.com" target="_blank">
         Go to Pinterest
@@ -45,37 +45,14 @@
 
 <script>
 import config from '~/config'
-const axios = require('axios')
+import { getUneditedPins } from '~/core/utilities/getUneditedPins'
 
 export default {
   async asyncData () {
-    // Only last 50 pins are returned, therefore, category limits must be set.
-    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${config.user}/pins/`)
-    const pins = response.data.data.pins
-    const uneditedPins = []
-
-    pins.forEach((pin) => {
-      // Create pin ID
-      const pinImage = pin.images['564x'].url
-      pin.id = pinImage.substring(
-        pinImage.lastIndexOf('/') + 1,
-        pinImage.lastIndexOf('.')
-      )
-
-      // Add Pin category
-      const category = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
-      pin.category = category
-
-      // Add Pin target board
-      pin.targetBoard = pin.board.name.split('Unedited ')[1]
-
-      if (pin.category.startsWith('unedited-')) {
-        uneditedPins.push(pin)
-      }
-    })
+    const pins = await getUneditedPins(config.user)
 
     return {
-      pins: uneditedPins
+      pins
     }
   }
 }

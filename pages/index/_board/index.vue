@@ -1,21 +1,21 @@
 <template>
-  <Collection :collection-data="collectionData" />
+  <Board :board-data="boardData" />
 </template>
 
 <script>
-import Collection from '~/user/theme/pages/Collection'
+import Board from '~/user/theme/pages/Board'
 import config from '~/config'
 const axios = require('axios')
 
 export default {
   components: {
-    Collection
+    Board
   },
   async asyncData ({ params }) {
-    const category = params.category
-    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
+    const board = params.board
+    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${board}/pins/`)
     const pins = response.data.data.pins
-    const board = response.data.data.board
+    const boardDetails = response.data.data.board
 
     pins.forEach((pin) => {
       // Create pin ID
@@ -36,20 +36,20 @@ export default {
     })
 
     return {
-      board,
-      collectionData: {
-        category,
+      boardDetails,
+      boardData: {
+        board,
         pins
       }
     }
   },
   head () {
     return {
-      title: `${this.board.name} | ${config.title}` || '',
+      title: `${this.boardDetails.name} | ${config.title}` || '',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: this.board.description || '' }
+        { hid: 'description', name: 'description', content: this.boardDetails.description || '' }
       ]
     }
   }

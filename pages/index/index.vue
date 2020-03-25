@@ -6,18 +6,18 @@
 import Home from '~/user/theme/pages/Home'
 
 import config from '~/config'
-import { getCategories } from '~/core/utilities/getCategories'
+import { getBoards } from '~/core/utilities/getBoards'
 
 export default {
   components: {
     Home
   },
   async asyncData () {
-    const categories = await getCategories(config.user)
+    const boards = await getBoards(config.user)
 
     return {
       homeData: {
-        categories
+        boards
       }
     }
   }

@@ -4,28 +4,28 @@ import config from './config'
 const dynamicRoutes = async () => {
   const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${config.user}/pins/`)
   const pins = response.data.data.pins
-  const categories = []
+  const boards = []
   const routes = []
 
   pins.forEach((pin) => {
-    const category = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
+    const board = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
 
-    if (!categories.includes(category, 0) && !category.startsWith('unedited-')) {
-      categories.push(category)
-      routes.push(`/${category}`)
+    if (!boards.includes(board, 0) && !board.startsWith('unedited-')) {
+      boards.push(board)
+      routes.push(`/${board}`)
     }
   })
 
   async function getSubRoutes () {
-    for (const category of categories) {
-      const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
+    for (const board of boards) {
+      const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${board}/pins/`)
       const pins = response.data.data.pins
 
       pins.forEach((pin) => {
         pin.title = pin.description.split(' |')[0]
         pin.slug = pin.title.toLowerCase().split(' ').join('-').split('\'').join('')
 
-        routes.push(`/${category}/${pin.slug}`)
+        routes.push(`/${board}/${pin.slug}`)
       })
     }
   }
