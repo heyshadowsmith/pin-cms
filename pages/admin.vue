@@ -3,23 +3,22 @@
     <div v-if="loggedIn">
       <PAdminMenu />
       <nuxt-child />
-      <p class="text-center text-xs text-gray-500">
-        {{ new Date().getFullYear() }} PinterestCMS, All Rights Reserved.
-      </p>
+      <PAdminFooter />
     </div>
   </div>
 </template>
 
 <script>
-import PAdminMenu from '~/components/admin/PAdminMenu'
+import PAdminMenu from '~/core/admin/PAdminMenu'
+import PAdminFooter from '~/core/admin/PAdminFooter'
 
 export default {
   components: {
-    PAdminMenu
+    PAdminMenu,
+    PAdminFooter
   },
   data () {
     return {
-      visible: true,
       loggedIn: false
     }
   },

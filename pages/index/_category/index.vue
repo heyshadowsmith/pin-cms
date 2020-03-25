@@ -1,16 +1,16 @@
 <template>
-  <div class="menu">
-    <nuxt-link v-for="(pin, index) in pins" :key="index" :to="`/${category}/${pin.slug}`">
-      {{ pin.title }}
-    </nuxt-link>
-  </div>
+  <Collection :collection-data="collectionData" />
 </template>
 
 <script>
+import Collection from '~/user/theme/pages/Collection'
 import config from '~/config'
 const axios = require('axios')
 
 export default {
+  components: {
+    Collection
+  },
   async asyncData ({ params }) {
     const category = params.category
     const response = await axios.get(`https://api.pinterest.com/v3/pidgets/boards/${config.user}/${category}/pins/`)
@@ -37,8 +37,10 @@ export default {
 
     return {
       board,
-      category,
-      pins
+      collectionData: {
+        category,
+        pins
+      }
     }
   },
   head () {

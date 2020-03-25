@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Logo from '~/components/theme/default/Logo'
+import Logo from '~/user/brand/Logo'
 
 export default {
   name: 'PMenu',

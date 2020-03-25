@@ -1,46 +1,31 @@
 <template>
   <div>
     <PAdminMenu v-if="loggedIn" />
-    <PMenu :links="categories" />
-    <nuxt-child />
+    <Theme :theme-data="themeData">
+      <nuxt-child />
+    </Theme>
   </div>
 </template>
 
 <script>
-import { uniqBy } from 'lodash'
-import PAdminMenu from '~/components/admin/PAdminMenu'
-import PMenu from '~/components/theme/default/PMenu'
+import PAdminMenu from '~/core/admin/PAdminMenu'
+import Theme from '~/user/theme'
+
 import config from '~/config'
-const axios = require('axios')
+import { getCategories } from '~/core/utilities/getCategories'
 
 export default {
   components: {
-    PAdminMenu,
-    PMenu
+    Theme,
+    PAdminMenu
   },
   async asyncData () {
-    // Only last 50 pins are returned, therefore, category limits must be set.
-    const response = await axios.get(`https://api.pinterest.com/v3/pidgets/users/${config.user}/pins/`)
-    const pins = response.data.data.pins
-    let categories = []
-
-    pins.forEach((pin) => {
-      const name = pin.board.name
-      const slug = pin.board.name.toLowerCase().split(' ').join('-').split('\'').join('')
-
-      if (!name.startsWith('Unedited')) {
-        categories.push({
-          name,
-          slug,
-          img: pin.images['564x'].url
-        })
-      }
-    })
-
-    categories = uniqBy(categories, category => category.name)
+    const categories = await getCategories(config.user)
 
     return {
-      categories
+      themeData: {
+        categories
+      }
     }
   },
   data () {

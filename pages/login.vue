@@ -16,15 +16,18 @@
         </nuxt-link>
       </div>
     </div>
-    <p class="text-center text-xs text-gray-500">
-      {{ new Date().getFullYear() }} PinterestCMS, All Rights Reserved.
-    </p>
+    <PAdminFooter />
   </div>
 </template>
 
 <script>
+import PAdminFooter from '~/core/admin/PAdminFooter'
+
 export default {
   name: 'Login',
+  components: {
+    PAdminFooter
+  },
   methods: {
     login () {
       const user = window.netlifyIdentity.currentUser()
