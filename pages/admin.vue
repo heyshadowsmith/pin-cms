@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import PAdminMenu from '~/core/admin/PAdminMenu'
-import PAdminFooter from '~/core/admin/PAdminFooter'
+import PAdminMenu from '~/components/core/admin/PAdminMenu'
+import PAdminFooter from '~/components/core/admin/PAdminFooter'
 
 export default {
   components: {

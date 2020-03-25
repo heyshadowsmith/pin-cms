@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Board from '~/user/theme/pages/Board'
+import Board from '~/components/user/theme/pages/Board'
 import config from '~/config'
 const axios = require('axios')
 

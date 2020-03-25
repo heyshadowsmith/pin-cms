@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import PAdminFooter from '~/core/admin/PAdminFooter'
+import PAdminFooter from '~/components/core/admin/PAdminFooter'
 
 export default {
   name: 'Login',

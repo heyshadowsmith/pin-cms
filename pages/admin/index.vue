@@ -45,7 +45,7 @@
 
 <script>
 import config from '~/config'
-import { getUneditedPins } from '~/core/utilities/getUneditedPins'
+import { getUneditedPins } from '~/utilities/getUneditedPins'
 
 export default {
   async asyncData () {

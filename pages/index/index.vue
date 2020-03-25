@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import Home from '~/user/theme/pages/Home'
+import Home from '~/components/user/theme/pages/Home'
 
 import config from '~/config'
-import { getBoards } from '~/core/utilities/getBoards'
+import { getBoards } from '~/utilities/getBoards'
 
 export default {
   components: {

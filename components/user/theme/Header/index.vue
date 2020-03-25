@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <Header :theme-data="themeData" />
-    <slot />
-  </div>
+  <Menu :links="themeData.boards" />
 </template>
 
 <script>
-import Header from '~/user/theme/Header'
+import Menu from '~/components/user/theme/Header/Menu'
 
 export default {
-  name: 'Theme',
+  name: 'Header',
   components: {
-    Header
+    Menu
   },
   props: {
     themeData: {

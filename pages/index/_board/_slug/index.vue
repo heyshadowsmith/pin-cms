@@ -8,7 +8,7 @@
 
 <script>
 import config from '~/config'
-import { getPin } from '~/core/utilities/getPin'
+import { getPin } from '~/utilities/getPin'
 
 export default {
   async asyncData ({ params }) {

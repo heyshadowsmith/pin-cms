@@ -54,7 +54,7 @@
 
 <script>
 import config from '~/config'
-import { getUneditedPin } from '~/core/utilities/getUneditedPin'
+import { getUneditedPin } from '~/utilities/getUneditedPin'
 
 export default {
   // This single "l" character was contributed by my 5 1/2 month old son Echo

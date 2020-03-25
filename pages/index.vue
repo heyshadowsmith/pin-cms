@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import PAdminMenu from '~/core/admin/PAdminMenu'
-import Theme from '~/user/theme'
+import PAdminMenu from '~/components/core/admin/PAdminMenu'
+import Theme from '~/components/user/theme'
 
 import config from '~/config'
-import { getBoards } from '~/core/utilities/getBoards'
+import { getBoards } from '~/utilities/getBoards'
 
 export default {
   components: {
